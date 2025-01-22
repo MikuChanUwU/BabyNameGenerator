@@ -1,0 +1,40 @@
+retrieve_baby_names_task:
+  description: >
+    Conduct a thorough research about {topic}, with the additional context of "{topic_details}".
+    Make sure you find any interesting and relevant information given
+    the current year is 2024.
+  expected_output: >
+    A list with 10 website URLs of the most relevant information about {topic} with the additional context of "{topic_details}".
+  agent: baby_name_retriever
+
+scrape_baby_websites_task:
+  description: >
+    Scrape the websites for the most relevant {topic} while paying close attention to additional details such as: "{topic_details}"
+  expected_output: >
+    Fully scraped websites with all the important information from the websites
+  agent: baby_name_website_scraper
+
+baby_names_write_task:
+  description: >
+    Summarize the information you have scraped from the websites and write a detailed report listing the top 10 {topic} relevant to the context of "{topic_details}" 
+  expected_output: >
+    A fully fledged news article with the main topics, each with a full section of information.
+    Formatted as markdown without '```'
+  agent: baby_name_writer
+
+file_write_task:
+  description: >
+    Write the baby name article to a file. Ensure the markdown is formatted correctly. Formatted as markdown without '```'
+    Example way of using the function:
+      file_writer_tool = FileWriterTool()
+      result = file_writer_tool._run('example.md', 'This is a test content.', 'test_directory')
+
+    Arguments:
+    filename: The name of the file you want to create or overwrite.
+    content: The content to write into the file.
+    directory (optional): The path to the directory where the file will be created. Defaults to the current directory (.). If the directory does not exist, it will be created.
+
+  expected_output: >
+    A fully fledged news article with all information from the previous task into a file named {topic}_article.md.
+  agent: file_writer
+
